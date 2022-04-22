@@ -24,20 +24,22 @@ export class PlayersService {
   }
 
   private async create(createPlayerDTO: CreatePlayerDTO): Promise<Player> {
-    const createdPlayer = new this.playerModel(createPlayerDTO);
-    return await createdPlayer.save();
+    const createdPlayer = new this.playerModel(createPlayerDTO).save();
+    return createdPlayer;
   }
 
   private async update(
     findedPlayer: Player,
     updatePlayerDTO: CreatePlayerDTO,
   ): Promise<Player> {
-    return await this.playerModel
+    await this.playerModel
       .findOneAndUpdate(
         { email: findedPlayer.email },
         { $set: updatePlayerDTO },
       )
       .exec();
+
+    return await this.playerModel.findOne({ email: findedPlayer.email }).exec();
   }
 
   async getAllPlayers(): Promise<Player[]> {
@@ -46,8 +48,9 @@ export class PlayersService {
 
   async getPlayerById(id: string): Promise<Player> {
     const findedPlayer = await this.playerModel.findById({ id }).exec();
+
     if (!findedPlayer) {
-      throw new NotFoundException('Jogaor não encontrado');
+      throw new NotFoundException('Player not found');
     } else {
       return findedPlayer;
     }
@@ -57,13 +60,13 @@ export class PlayersService {
     const findedPlayer = await this.playerModel.findOne({ email }).exec();
 
     if (!findedPlayer) {
-      throw new NotFoundException('Jogaor não encontrado');
+      throw new NotFoundException('Player not found');
     } else {
       return findedPlayer;
     }
   }
 
-  async deletePlayerById(id: string): Promise<void> {
-    return await this.playerModel.remove({ id }).exec();
+  async deletePlayerById(id: string) {
+    return await this.playerModel.deleteOne({ id }).exec();
   }
 }
