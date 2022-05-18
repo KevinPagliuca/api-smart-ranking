@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Query,
   UsePipes,
   ValidationPipe,
@@ -20,8 +21,17 @@ export class PlayersController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  async createUpdatePlayer(@Body() createPlayerDTO: CreatePlayerDTO) {
-    return await this.playerService.createUpdatePlayer(createPlayerDTO);
+  async createPlayer(@Body() createPlayerDTO: CreatePlayerDTO) {
+    return await this.playerService.create(createPlayerDTO);
+  }
+
+  @Put(':id')
+  @UsePipes(ValidationPipe)
+  async updatePlayer(
+    @Body() createPlayerDTO: CreatePlayerDTO,
+    @Param('id') id: string,
+  ) {
+    return await this.playerService.update(id, createPlayerDTO);
   }
 
   @Get()
@@ -32,6 +42,11 @@ export class PlayersController {
   @Get('/email')
   async getPlayerByEmail(@Query('email', ParamValidatorPlayer) email: string) {
     return await this.playerService.getPlayerByEmail(email);
+  }
+
+  @Get(':id')
+  async getPlayerById(@Param('id') id: string) {
+    return await this.playerService.getPlayerById(id);
   }
 
   @Delete(':id')
