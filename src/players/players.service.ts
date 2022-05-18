@@ -8,10 +8,12 @@ import { Player } from './interfaces/player.interface';
 import { InjectModel } from '@nestjs/mongoose';
 
 import { Model, isValidObjectId } from 'mongoose';
+import { UpdatePlayerDTO } from './dtos/updatePlayer.dto';
 
 interface VerifyPlayerExistsParams {
   email?: string;
   id?: string;
+  exception?: boolean;
 }
 
 @Injectable()
@@ -21,19 +23,24 @@ export class PlayersService {
     private readonly playerModel: Model<Player>,
   ) {}
 
-  private async verifyPlayerExists({ email, id }: VerifyPlayerExistsParams) {
+  private async verifyPlayerExists({
+    email,
+    id,
+    exception = true,
+  }: VerifyPlayerExistsParams): Promise<Player | null> {
     let player: Player;
+
     if (email) {
       player = await this.playerModel.findOne({ email }).exec();
     } else if (id && isValidObjectId(id)) {
       player = await this.playerModel.findOne({ _id: id }).exec();
     }
 
-    if (!player) {
+    if (!player && exception) {
       throw new NotFoundException('Player not found');
     }
 
-    return player;
+    return player || null;
   }
 
   async create(createPlayerDTO: CreatePlayerDTO): Promise<Player> {
@@ -51,20 +58,12 @@ export class PlayersService {
     return createdPlayer;
   }
 
-  async update(_id: string, updatePlayerDTO: CreatePlayerDTO): Promise<Player> {
-    const player = await this.playerModel.findOne({
-      _id,
-    });
+  async update(_id: string, updatePlayerDTO: UpdatePlayerDTO): Promise<Player> {
+    await this.verifyPlayerExists({ id: _id });
 
-    if (!player) {
-      throw new NotFoundException('Player not found');
-    }
-
-    await this.playerModel
-      .findOneAndUpdate({ _id }, { $set: updatePlayerDTO })
+    return await this.playerModel
+      .findOneAndUpdate({ _id }, { $set: updatePlayerDTO }, { new: true })
       .exec();
-
-    return player;
   }
 
   async getAllPlayers(): Promise<Player[]> {
