@@ -13,7 +13,7 @@ import {
 
 import { CreatePlayerDTO } from './dtos/createPlayer.dto';
 import { UpdatePlayerDTO } from './dtos/updatePlayer.dto';
-import { ParamValidatorPlayer } from './pipes/param-validator.pipe';
+import { ParamValidatorPlayer } from './pipes/paramValidator.pipe';
 import { PlayersService } from './players.service';
 
 @Controller('api/v1/players')
