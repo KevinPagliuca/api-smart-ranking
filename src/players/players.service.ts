@@ -23,17 +23,19 @@ export class PlayersService {
     private readonly playerModel: Model<IPlayer>,
   ) {}
 
-  private async verifyPlayerExists({
+  async verifyPlayerExists({
     email,
     id,
     exception = true,
   }: VerifyPlayerExistsParams): Promise<IPlayer | null> {
     let player: IPlayer;
 
-    if (email) {
-      player = await this.playerModel.findOne({ email }).exec();
-    } else if (id && isValidObjectId(id)) {
+    if (id && isValidObjectId(id)) {
       player = await this.playerModel.findOne({ _id: id }).exec();
+    } else if (email) {
+      player = await this.playerModel
+        .findOne({ email: { $regex: new RegExp(email, 'i') } })
+        .exec();
     }
 
     if (!player && exception) {

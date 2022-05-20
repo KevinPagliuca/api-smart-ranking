@@ -8,6 +8,8 @@ import { CreateCategoryDTO } from './dtos/createCategory.dto';
 import { ICategory } from './interfaces/category.interface';
 import { Model, isValidObjectId } from 'mongoose';
 import { UpdateCategoryDTO } from './dtos/updateCategory.dto';
+import { AssignPlayerOnCategoryDTO } from './dtos/assignPlayerOnCategory.dto';
+import { PlayersService } from 'src/players/players.service';
 
 interface VerifyCategoryExists {
   id?: string;
@@ -20,6 +22,7 @@ export class CategoriesService {
   constructor(
     @InjectModel('Category')
     private readonly categoryModel: Model<ICategory>,
+    private readonly playerService: PlayersService,
   ) {}
 
   async verifyCategoryExists(data: VerifyCategoryExists) {
@@ -27,10 +30,14 @@ export class CategoriesService {
     let findedCategory: ICategory;
 
     if (id && isValidObjectId(id)) {
-      findedCategory = await this.categoryModel.findById(id).exec();
+      findedCategory = await this.categoryModel
+        .findById(id)
+        .populate('players')
+        .exec();
     } else if (category) {
       findedCategory = await this.categoryModel
         .findOne({ category: { $regex: new RegExp(category, 'i') } })
+        .populate('players')
         .exec();
     }
 
@@ -63,6 +70,7 @@ export class CategoriesService {
 
     return await this.categoryModel
       .findOneAndUpdate({ _id: id }, { $set: updateCategoryDTO }, { new: true })
+      .populate('players')
       .exec();
   }
 
@@ -71,6 +79,7 @@ export class CategoriesService {
       .find({
         category: { $regex: new RegExp(category, 'i') },
       })
+      .populate('players')
       .exec();
   }
 
@@ -99,5 +108,37 @@ export class CategoriesService {
   async delete(id: string) {
     await this.verifyCategoryExists({ id, exception: true });
     return await this.categoryModel.deleteOne({ _id: id });
+  }
+
+  async assignPlayerOnCategory({
+    categoryId,
+    playerId,
+  }: AssignPlayerOnCategoryDTO) {
+    const category = await this.verifyCategoryExists({
+      id: categoryId,
+      exception: true,
+    });
+
+    const player = await this.playerService.verifyPlayerExists({
+      id: playerId,
+      exception: true,
+    });
+
+    const findedPlayerExistsOnCategory = await this.categoryModel
+      .find({ _id: categoryId })
+      .where('players')
+      .equals(playerId)
+      .exec();
+
+    if (findedPlayerExistsOnCategory.length > 0) {
+      throw new BadRequestException('Player already assigned on this category');
+    }
+
+    category.players.push(player);
+
+    return await this.categoryModel
+      .findOneAndUpdate({ id: category._id }, { $set: category }, { new: true })
+      .populate('players')
+      .exec();
   }
 }

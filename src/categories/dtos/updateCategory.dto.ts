@@ -1,10 +1,10 @@
-import { ArrayMinSize, IsArray, IsNotEmpty, IsString } from 'class-validator';
+import { ArrayMinSize, IsArray, IsOptional, IsString } from 'class-validator';
 import { IPlayer } from 'src/players/interfaces/player.interface';
 import { IEvent } from '../interfaces/category.interface';
 
 export class UpdateCategoryDTO {
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   description: string;
 
   @IsArray()

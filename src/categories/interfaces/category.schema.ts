@@ -11,12 +11,7 @@ export const ICategorySchema = new mongoose.Schema(
         value: { type: Number },
       },
     ],
-    players: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Player',
-      },
-    ],
+    players: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Player' }],
   },
   {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },

@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 
-export const PlayerSchema = new mongoose.Schema(
+export const IPlayerSchema = new mongoose.Schema(
   {
     email: { type: String, unique: true },
     phone_number: { type: String },

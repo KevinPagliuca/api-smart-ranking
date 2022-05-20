@@ -11,6 +11,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
+import { AssignPlayerOnCategoryDTO } from './dtos/assignPlayerOnCategory.dto';
 import { CreateCategoryDTO } from './dtos/createCategory.dto';
 import { UpdateCategoryDTO } from './dtos/updateCategory.dto';
 
@@ -31,6 +32,16 @@ export class CategoriesController {
     @Body() updateCategoryDTO: UpdateCategoryDTO,
   ) {
     return await this.categoriesService.update(id, updateCategoryDTO);
+  }
+
+  @Post('/:categoryId/assign-player/:playerId')
+  @UsePipes(ValidationPipe)
+  async assignPlayerOnCategory(@Param() params: AssignPlayerOnCategoryDTO) {
+    const { categoryId, playerId } = params;
+    return await this.categoriesService.assignPlayerOnCategory({
+      categoryId,
+      playerId,
+    });
   }
 
   @Get('/')
