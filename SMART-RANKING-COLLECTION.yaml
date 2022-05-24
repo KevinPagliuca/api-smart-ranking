@@ -1,0 +1,611 @@
+_type: export
+__export_format: 4
+__export_date: 2022-05-24T22:26:42.109Z
+__export_source: insomnia.desktop.app:v2022.3.0
+resources:
+  - _id: req_244682d736b94689b0bf1dcec8a39cef
+    parentId: fld_0e599c638b24475c8b1139f769cd8ed6
+    modified: 1653430784564
+    created: 1653430764912
+    url: "{{ _.baseURL }}/challenges/628d59e3ad986c1a4999041c"
+    name: DELETE
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1653430764912
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_0e599c638b24475c8b1139f769cd8ed6
+    parentId: wrk_94ac7fdfb77640d59dd12e6d90c4abee
+    modified: 1653431045398
+    created: 1653417646240
+    name: CHALLENGES
+    description: ""
+    environment: {}
+    environmentPropertyOrder: {}
+    metaSortKey: -1653417646240
+    _type: request_group
+  - _id: wrk_94ac7fdfb77640d59dd12e6d90c4abee
+    parentId: null
+    modified: 1650593603096
+    created: 1650593603096
+    name: API-SMART-RANKING
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_e1071062724c41cc99f448b0c06c9676
+    parentId: fld_0e599c638b24475c8b1139f769cd8ed6
+    modified: 1653429846642
+    created: 1653426532555
+    url: "{{ _.baseURL }}/challenges/find/status"
+    name: FIND ALL BY STATUS
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_9304025218fe4678a9b452f118b9b6a4
+        name: status
+        value: PENDING
+        description: ""
+        disabled: false
+    headers: []
+    authentication: {}
+    metaSortKey: -1653426532555
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_1bd07dd0c8bc4bb780e28a3a6dd45ba3
+    parentId: fld_0e599c638b24475c8b1139f769cd8ed6
+    modified: 1653429872339
+    created: 1653429819111
+    url: "{{ _.baseURL }}/challenges/find/category"
+    name: FIND ALL BY CATEGORY
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_9304025218fe4678a9b452f118b9b6a4
+        name: id
+        value: 628d430477da3b48e4532b68
+        description: ""
+        disabled: false
+    headers: []
+    authentication: {}
+    metaSortKey: -1653426525153
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_2d387132017540f586a2a5ebaa7b7da2
+    parentId: fld_0e599c638b24475c8b1139f769cd8ed6
+    modified: 1653429855246
+    created: 1653429823744
+    url: "{{ _.baseURL }}/challenges/find/player"
+    name: FIND ALL BY PLAYER
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_9304025218fe4678a9b452f118b9b6a4
+        name: id
+        value: 628d41eb39d5d53e4d035992
+        description: ""
+        disabled: false
+    headers: []
+    authentication: {}
+    metaSortKey: -1653426521452
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_04782ab3d4f2434da0be7d45a4f0dafe
+    parentId: fld_0e599c638b24475c8b1139f769cd8ed6
+    modified: 1653426521294
+    created: 1653426517751
+    url: "{{ _.baseURL }}/challenges"
+    name: FIND ALL
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1653426517751
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_4ec8ae8c9aa24d90a5591f1d83b66596
+    parentId: fld_0e599c638b24475c8b1139f769cd8ed6
+    modified: 1653429974156
+    created: 1653429972203
+    url: "{{ _.baseURL }}/challenges/628d4527e6ef7a8a43bf7332"
+    name: FIND BY ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1653422087024.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_eb3c973e28864681b61829a6491f584a
+    parentId: fld_0e599c638b24475c8b1139f769cd8ed6
+    modified: 1653430752881
+    created: 1653417656298
+    url: "{{ _.baseURL }}/challenges"
+    name: CREATE
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"dateTimeChallenge":  "2022-05-25T19:18:49-03:00",
+        	"requesterPlayerId": "628d41db39d5d53e4d03598f",
+        	"challengedPlayerId": "628d41eb39d5d53e4d035992"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_784c07407282475fa7b18466fa81feb3
+    authentication: {}
+    metaSortKey: -1653417656298
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_c52af1465f974a538c1e1cbd45661ad8
+    parentId: fld_d3f587d0bea3406f8c91f702baf4a8fb
+    modified: 1653426492876
+    created: 1653079776530
+    url: "{{ _.baseURL
+      }}/category/628d430477da3b48e4532b68/assign-player/628d41eb39d5d53e4d0359\
+      92"
+    name: ASSIGN
+    description: /category/**`:categoryId`**/assign-player/**`:playerId`**
+    method: POST
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1653079776530
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_d3f587d0bea3406f8c91f702baf4a8fb
+    parentId: wrk_94ac7fdfb77640d59dd12e6d90c4abee
+    modified: 1653079772372
+    created: 1653079772372
+    name: ASSIGN PLAYER ON CATEGORY
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1653079772372
+    _type: request_group
+  - _id: req_da20569e0c324f0595ad0ec9f90fffe5
+    parentId: fld_9df06579f6be4f6499031cf4117e9ba3
+    modified: 1653425463125
+    created: 1650593753241
+    url: "{{ _.baseURL }}/players"
+    name: CREATE
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"phone_number": "11 95175-6854",
+        	"email": "Jorginho@outlook.com",
+        	"name": "Jorginho"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_1b9dcc06b6ef47eda20d703582656b69
+    authentication: {}
+    metaSortKey: -1650593753241
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_9df06579f6be4f6499031cf4117e9ba3
+    parentId: wrk_94ac7fdfb77640d59dd12e6d90c4abee
+    modified: 1650593646234
+    created: 1650593646234
+    name: PLAYERS
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1650593646234
+    _type: request_group
+  - _id: req_d577a773f8604aca8b29199e9371f258
+    parentId: fld_9df06579f6be4f6499031cf4117e9ba3
+    modified: 1653424565317
+    created: 1650597154638
+    url: "{{ _.baseURL }}/players/628d418d39d5d53e4d03597e"
+    name: UPDATE
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"phone_number": "11 95175-6854",
+        	"name": "Kevin Pagliuca"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_1b9dcc06b6ef47eda20d703582656b69
+    authentication: {}
+    metaSortKey: -1650593728914.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_f6cf4a2c0e104bf9b3c4cc05977ef591
+    parentId: fld_9df06579f6be4f6499031cf4117e9ba3
+    modified: 1650597170384
+    created: 1650593655935
+    url: "{{ _.baseURL }}/players"
+    name: GET ALL
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1650593716751.25
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_3d461aa12c6f4eb5a92260d31e5febac
+    parentId: fld_9df06579f6be4f6499031cf4117e9ba3
+    modified: 1653424578032
+    created: 1650593718324
+    url: "{{ _.baseURL }}/players/email"
+    name: GET BY EMAIL
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_d9316482fed14df0aa31932f78c13b70
+        name: email
+        value: kevin.pagliuca@outlook.com
+        description: ""
+        disabled: false
+    headers: []
+    authentication: {}
+    metaSortKey: -1650593704588
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_1a0b429b79ce4e058607720d4fba6702
+    parentId: fld_9df06579f6be4f6499031cf4117e9ba3
+    modified: 1653424593442
+    created: 1650596312445
+    url: "{{ _.baseURL }}/players/628d418d39d5d53e4d03597e"
+    name: GET BY ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1650593680261.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_531eb400c9af4b519ecc80a462a465b3
+    parentId: fld_9df06579f6be4f6499031cf4117e9ba3
+    modified: 1653424598433
+    created: 1650595080889
+    url: "{{ _.baseURL }}/players/628d418d39d5d53e4d03597e"
+    name: DELETE
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1650397163155.75
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_e2e61978181a4cfeb2ed263942a3b601
+    parentId: fld_1d990c0a2b5d459c9e40f0471d033e3d
+    modified: 1653431005663
+    created: 1652965376843
+    url: "{{ _.baseURL }}/categories"
+    name: CREATE
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "S",
+        	"description": "Top 1",
+        	"events": [
+        		{
+        			"name": "WIN",
+        			"operator": "+",
+        			"value": 20
+        		},
+        		{
+        			"name": "WIN_LEADER",
+        			"operator": "+",
+        			"value": 35
+        		},
+        		{
+        			"name": "DEFEAT",
+        			"operator": "-",
+        			"value": 30
+        		}
+        	]
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_1b9dcc06b6ef47eda20d703582656b69
+    authentication: {}
+    metaSortKey: -1650593753241
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_1d990c0a2b5d459c9e40f0471d033e3d
+    parentId: wrk_94ac7fdfb77640d59dd12e6d90c4abee
+    modified: 1652965376832
+    created: 1652965376832
+    name: CATEGORIES
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1645108145479
+    _type: request_group
+  - _id: req_94da8c526cf44e768346635d333164a9
+    parentId: fld_1d990c0a2b5d459c9e40f0471d033e3d
+    modified: 1653431004743
+    created: 1652965376851
+    url: "{{ _.baseURL }}/categories/628d41f839d5d53e4d035996"
+    name: UPDATE
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"description": "TOP 2",
+        	"events": [
+        		{
+        			"name": "WIN",
+        			"operator": "+",
+        			"value": 30
+        		},
+        		{
+        			"name": "WIN_LEADER",
+        			"operator": "+",
+        			"value": 50
+        		},
+        		{
+        			"name": "DEFEAT",
+        			"operator": "-",
+        			"value": 20
+        		}
+        	]
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_1b9dcc06b6ef47eda20d703582656b69
+    authentication: {}
+    metaSortKey: -1650593728914.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_dd7eec0ced624adda6621d184fbc56ff
+    parentId: fld_1d990c0a2b5d459c9e40f0471d033e3d
+    modified: 1653083805627
+    created: 1652965376836
+    url: "{{ _.baseURL }}/categories"
+    name: FIND ALL
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_7ac25ff038d448d7867de9e2678683da
+        name: category
+        value: a
+        description: ""
+        disabled: true
+        type: text
+        multiline: false
+    headers: []
+    authentication: {}
+    metaSortKey: -1650593716751.25
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_f05519c9f04147708b21e1670d635397
+    parentId: fld_1d990c0a2b5d459c9e40f0471d033e3d
+    modified: 1653424677361
+    created: 1652965376848
+    url: "{{ _.baseURL }}/categories/find/S"
+    name: FIND BY CATEGORY OR ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1650593680261.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_45d652f8b98f4b82b2d4db089aa696ab
+    parentId: fld_1d990c0a2b5d459c9e40f0471d033e3d
+    modified: 1653424689972
+    created: 1652972964423
+    url: "{{ _.baseURL }}/category/628d41f839d5d53e4d035996"
+    name: FIND BY ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1650495421708.625
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_812d1ce6d1dd4120acd94b04c3aaf940
+    parentId: fld_1d990c0a2b5d459c9e40f0471d033e3d
+    modified: 1652971681866
+    created: 1652965376846
+    url: "{{ _.baseURL }}/categories"
+    name: DELETE
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1650397163155.75
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_36f3377418d514fb34a41582c3206fcf47e780e1
+    parentId: wrk_94ac7fdfb77640d59dd12e6d90c4abee
+    modified: 1653431171309
+    created: 1650593603100
+    name: Base Environment
+    data:
+      baseURL: http://localhost:3333/api/v1
+    dataPropertyOrder:
+      "&":
+        - baseURL
+    color: null
+    isPrivate: false
+    metaSortKey: 1650593603100
+    _type: environment
+  - _id: jar_36f3377418d514fb34a41582c3206fcf47e780e1
+    parentId: wrk_94ac7fdfb77640d59dd12e6d90c4abee
+    modified: 1650593603102
+    created: 1650593603102
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
+  - _id: spc_db0cbc5c86e24eef91db241a50631a9d
+    parentId: wrk_94ac7fdfb77640d59dd12e6d90c4abee
+    modified: 1650593603097
+    created: 1650593603097
+    fileName: API-SMART-RANKING
+    contents: ""
+    contentType: yaml
+    _type: api_spec

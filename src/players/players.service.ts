@@ -13,7 +13,7 @@ import { UpdatePlayerDTO } from './dtos/updatePlayer.dto';
 interface VerifyPlayerExistsParams {
   email?: string;
   id?: string;
-  exception?: boolean;
+  exception?: boolean | string;
 }
 
 @Injectable()
@@ -38,8 +38,10 @@ export class PlayersService {
         .exec();
     }
 
-    if (!player && exception) {
-      throw new NotFoundException('Player not found');
+    if (!player && !!exception) {
+      throw new NotFoundException(
+        typeof exception === 'string' ? exception : 'Player not found',
+      );
     }
 
     return player || null;
@@ -48,6 +50,7 @@ export class PlayersService {
   async create(createPlayerDTO: CreatePlayerDTO): Promise<IPlayer> {
     const player = await this.verifyPlayerExists({
       email: createPlayerDTO.email,
+      exception: false,
     });
 
     if (player) {
@@ -74,17 +77,20 @@ export class PlayersService {
   }
 
   async getPlayerById(id: string): Promise<IPlayer> {
-    const findedPlayer = await this.verifyPlayerExists({ id });
+    const findedPlayer = await this.verifyPlayerExists({ id, exception: true });
     return findedPlayer;
   }
 
   async getPlayerByEmail(email: string): Promise<IPlayer> {
-    const findedPlayer = await this.verifyPlayerExists({ email });
+    const findedPlayer = await this.verifyPlayerExists({
+      email,
+      exception: true,
+    });
     return findedPlayer;
   }
 
   async deletePlayerById(id: string) {
-    await this.verifyPlayerExists({ id });
+    await this.verifyPlayerExists({ id, exception: true });
     return await this.playerModel.deleteOne({ _id: id });
   }
 }

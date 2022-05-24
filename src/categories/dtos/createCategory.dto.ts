@@ -5,7 +5,7 @@ import { IEvent } from '../interfaces/category.interface';
 export class CreateCategoryDTO {
   @IsString()
   @IsNotEmpty()
-  readonly category: string;
+  readonly name: string;
 
   @IsString()
   @IsNotEmpty()

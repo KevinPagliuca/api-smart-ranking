@@ -24,9 +24,9 @@ export class AllExceptionsFilter {
     );
 
     return response.status(status).json({
-      ...(typeof message === 'object' ? message : { message }),
       timestamp: new Date().toISOString(),
       path: request.url,
+      ...(typeof message === 'object' ? message : { message }),
     });
   }
 }

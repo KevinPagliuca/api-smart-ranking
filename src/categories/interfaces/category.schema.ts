@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose';
 
 export const ICategorySchema = new mongoose.Schema(
   {
-    category: { type: String, unique: true },
+    name: { type: String, unique: true },
     description: { type: String },
     events: [
       {

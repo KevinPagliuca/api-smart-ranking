@@ -2,7 +2,7 @@ import { Document } from 'mongoose';
 import { IPlayer } from 'src/players/interfaces/player.interface';
 
 export interface ICategory extends Document {
-  readonly category: string;
+  readonly name: string;
   description: string;
   events: IEvent[];
   players: IPlayer[];
