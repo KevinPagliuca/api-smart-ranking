@@ -29,7 +29,7 @@ export class CategoriesService {
     const { category, exception, id } = data;
     let findedCategory: ICategory;
 
-    if (id && isValidObjectId(id)) {
+    if (id) {
       findedCategory = await this.categoryModel
         .findById(id)
         .populate('players')

@@ -10,9 +10,6 @@ import { PlayersService } from './players.service';
   ],
   controllers: [PlayersController],
   providers: [PlayersService],
-  exports: [
-    PlayersService,
-    MongooseModule.forFeature([{ name: 'Player', schema: IPlayerSchema }]),
-  ],
+  exports: [PlayersService],
 })
 export class PlayersModule {}

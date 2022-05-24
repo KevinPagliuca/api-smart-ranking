@@ -13,7 +13,7 @@ import {
 
 import { CreatePlayerDTO } from './dtos/createPlayer.dto';
 import { UpdatePlayerDTO } from './dtos/updatePlayer.dto';
-import { ParamValidatorPlayer } from './pipes/paramValidator.pipe';
+import { ParamValidator } from '../shared/pipes/paramValidator.pipe';
 import { PlayersService } from './players.service';
 
 @Controller('api/v1/players')
@@ -41,7 +41,7 @@ export class PlayersController {
   }
 
   @Get('/email')
-  async getPlayerByEmail(@Query('email', ParamValidatorPlayer) email: string) {
+  async getPlayerByEmail(@Query('email', ParamValidator) email: string) {
     return await this.playerService.getPlayerByEmail(email);
   }
 
