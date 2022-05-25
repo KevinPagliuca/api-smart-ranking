@@ -3,8 +3,10 @@ import {
   Controller,
   Delete,
   Get,
+  Headers,
   Param,
   Post,
+  Put,
   Query,
   UsePipes,
   ValidationPipe,
@@ -12,6 +14,7 @@ import {
 import { ParamValidator } from 'src/shared/pipes/paramValidator.pipe';
 import { ChallengesService } from './challenges.service';
 import { CreateChallengeDTO } from './dtos/createChallenge.dto';
+import { UpdateChallengeDTO } from './dtos/updateChallenge.dto';
 import { IChallengeStatus } from './interfaces/challenge.interface';
 
 @Controller('api/v1/challenges')
@@ -22,6 +25,20 @@ export class ChallengesController {
   @UsePipes(ValidationPipe)
   async create(@Body() createChallengeDTO: CreateChallengeDTO) {
     return await this.challengesService.create(createChallengeDTO);
+  }
+
+  @Put('/:id')
+  @UsePipes(ValidationPipe)
+  async update(
+    @Param('id') id: string,
+    @Body() updateChallengeDTO: UpdateChallengeDTO,
+    @Headers('authorization') updatePlayerId: string,
+  ) {
+    return await this.challengesService.update(
+      id,
+      updateChallengeDTO,
+      updatePlayerId,
+    );
   }
 
   @Get('/')

@@ -5,6 +5,7 @@ import { Model, isValidObjectId } from 'mongoose';
 import { PlayersService } from 'src/players/players.service';
 import { CreateChallengeDTO } from './dtos/createChallenge.dto';
 import { CategoriesService } from 'src/categories/categories.service';
+import { UpdateChallengeDTO } from './dtos/updateChallenge.dto';
 
 @Injectable()
 export class ChallengesService {
@@ -60,6 +61,7 @@ export class ChallengesService {
     const challengeCategory = await this.getChallengeCategory(
       requesterPlayer._id,
     );
+
     const newChallengeDTO: Partial<IChallenge> = {
       dateTimeChallenge: dto.dateTimeChallenge,
       requester: requesterPlayer._id,
@@ -68,20 +70,51 @@ export class ChallengesService {
       status: IChallengeStatus.PENDING,
     };
 
-    const createdChallenge = new this.challengeModel(newChallengeDTO).save();
+    const createdChallenge = await new this.challengeModel(
+      newChallengeDTO,
+    ).populate('players');
 
-    return createdChallenge;
+    return await createdChallenge.save();
+  }
+
+  async update(id: string, dto: UpdateChallengeDTO, updatePlayerId: string) {
+    const challenge = await this.findById(id);
+
+    if (!challenge) {
+      throw new BadRequestException('Challenge not found');
+    }
+
+    const isRequesterPlayerRequesting =
+      challenge.requester._id.toString() === updatePlayerId;
+
+    return await this.challengeModel
+      .findOneAndUpdate(
+        { _id: challenge._id },
+        {
+          $set: {
+            status: isRequesterPlayerRequesting ? challenge.status : dto.status,
+            dateTimeChallenge: dto.dateTimeChallenge,
+            dateTimeAnswer:
+              !isRequesterPlayerRequesting &&
+              dto.status === IChallengeStatus.ACCEPTED
+                ? new Date()
+                : null,
+          },
+        },
+        { new: true },
+      )
+      .populate('players')
+      .exec();
   }
 
   async findAll() {
-    return this.challengeModel.find();
+    return await this.challengeModel.find().populate('players');
   }
 
   async findById(id: string) {
-    if (!isValidObjectId(id)) {
-      throw new BadRequestException('Challenge id is invalid');
-    }
-    return this.challengeModel.findById(id);
+    return await this.challengeModel
+      .findById(id)
+      .populate(['category', 'players']);
   }
 
   async findAllByPlayerId(playerId: string) {
@@ -89,9 +122,9 @@ export class ChallengesService {
       throw new BadRequestException('Player id is invalid');
     }
 
-    return this.challengeModel.find({
-      players: playerId,
-    });
+    return await this.challengeModel
+      .find({ players: playerId })
+      .populate(['category', 'players']);
   }
 
   async findAllByCategoryId(categoryId: string) {
@@ -99,15 +132,15 @@ export class ChallengesService {
       throw new BadRequestException('Category id is invalid');
     }
 
-    return this.challengeModel.find({
-      category: categoryId,
-    });
+    return await this.challengeModel
+      .find({ category: categoryId })
+      .populate(['category', 'players']);
   }
 
   async findAllByStatus(status: IChallengeStatus) {
-    return this.challengeModel.find({
-      status,
-    });
+    return await this.challengeModel
+      .find({ status })
+      .populate(['category', 'players']);
   }
 
   async delete(id: string) {

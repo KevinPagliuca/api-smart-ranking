@@ -12,7 +12,6 @@ export enum IChallengeStatus {
 
 export class IChallenge extends Document {
   dateTimeChallenge: Date;
-  dateTimeRequest: Date;
   dateTimeAnswer: Date;
 
   requester: IPlayer;
