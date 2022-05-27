@@ -1,77 +1,31 @@
 _type: export
 __export_format: 4
-__export_date: 2022-05-25T21:41:34.925Z
+__export_date: 2022-05-27T19:21:06.459Z
 __export_source: insomnia.desktop.app:v2022.3.0
 resources:
-  - _id: req_5f8d618cd8f94d7cad7b71a04edf92df
+  - _id: req_eb3c973e28864681b61829a6491f584a
     parentId: fld_0e599c638b24475c8b1139f769cd8ed6
-    modified: 1653514597423
-    created: 1653507502769
-    url: "{{ _.baseURL }}/challenges/628e9549da2d44b4e00ace9d"
-    name: UPDATE REQUESTER
-    description: >
-      <span style="color:#00FFFF;font-size:16px;font-weight:700">
-      	The requesting player can change the game time while the status is pending.
-      </span>
-
-
-      #### POSSIBLES REQ:
-
-
-      ```json
-
-      {
-      	"dateTimeChallenge": "2022-05-28T20:30:00.000Z",	
-      }
-
-      ```
-
-
-      <span style="color:#00FFFF;font-size:16px;font-weight:700">
-      	### THE CHALLEGED PLAYER CAN CHANGE THE GAME TIME TOO AND STATUS
-      </span>
-
-
-      #### POSSIBLES REQ:
-
-      ```json
-
-      {
-      	"dateTimeChallenge": "2022-05-28T20:30:00.000Z",	
-      	"STATUS": "ACCEPTED",
-      }
-
-      ```
-
-      <span style="color:#00FFFF;font-size:16px;font-weight:700">
-      	STATUS <br />
-      </span>
-
-      	CANCELED
-      	PENDING
-      	ACCEPTED
-      	FINISHED
-      	REJECTED
-    method: PUT
+    modified: 1653677193895
+    created: 1653417656298
+    url: "{{ _.baseURL }}/challenges"
+    name: CREATE CHALLENGE
+    description: ""
+    method: POST
     body:
       mimeType: application/json
       text: |-
         {
-        	"dateTimeChallenge": "2022-05-28T20:30:00.000Z",
-        	"status": "ACCEPTED"
+        	"dateTimeChallenge":  "2022-05-29T20:30:00.000Z",
+        	"requesterPlayerId": "628d41db39d5d53e4d03598f",
+        	"challengedPlayerId": "628d41eb39d5d53e4d035992"
         }
     parameters: []
     headers:
       - name: Content-Type
         value: application/json
-        id: pair_ff9c1dc8d04f4daea02b615eefa6fbf0
-      - id: pair_182150c5f5e44233af722772335f59db
-        name: authorization
-        value: 628d41db39d5d53e4d03598f
-        description: ""
-        disabled: true
+        id: pair_784c07407282475fa7b18466fa81feb3
     authentication: {}
-    metaSortKey: -1653507502769
+    metaSortKey: -1653675430363
     isPrivate: false
     settingStoreCookies: true
     settingSendCookies: true
@@ -98,11 +52,121 @@ resources:
     description: ""
     scope: collection
     _type: workspace
+  - _id: req_dde9f1685b1444db86acd038071e7408
+    parentId: fld_0e599c638b24475c8b1139f769cd8ed6
+    modified: 1653678926219
+    created: 1653675430313
+    url: "{{ _.baseURL }}/challenges/62911c8a5a7d0e3013832c57/create-game"
+    name: CREATE GAME
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"def": "628d41db39d5d53e4d03598f",
+        	"result": [
+        		{ "set": "6-1" }, { "set": "6-4" }
+        	]
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_1871ac161f1d472189153246725575ef
+    authentication: {}
+    metaSortKey: -1653675430313
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_5f8d618cd8f94d7cad7b71a04edf92df
+    parentId: fld_0e599c638b24475c8b1139f769cd8ed6
+    modified: 1653677879529
+    created: 1653507502769
+    url: "{{ _.baseURL }}/challenges/62911c8a5a7d0e3013832c57"
+    name: UPDATE
+    description: >
+      <span style="color:#00FFFF;font-size:16px;font-weight:700">
+      	The requesting player can change the game time while the status is pending.
+      </span>
+
+
+      POSSIBLES REQ:
+
+
+      ```json
+
+      {
+      	"dateTimeChallenge": "2022-05-28T20:30:00.000Z",	
+      }
+
+      ```
+
+
+      <span style="color:#00FFFF;font-size:16px;font-weight:700">
+      	The challenged player can change the game time too and status
+      </span>
+
+
+      POSSIBLES REQ:
+
+
+      ```json
+
+      {
+      	"dateTimeChallenge": "2022-05-28T20:30:00.000Z",	
+      	"STATUS": "ACCEPTED",
+      }
+
+      ```
+
+      <span style="color:#00FFFF;font-size:16px;font-weight:700">
+      	Status Options <br />
+      </span>
+
+      	CANCELED
+      	PENDING
+      	ACCEPTED
+      	FINISHED
+      	REJECTED
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"dateTimeChallenge": "2022-05-28T20:30:00.000Z",
+        	"status": "PENDING"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_ff9c1dc8d04f4daea02b615eefa6fbf0
+      - id: pair_182150c5f5e44233af722772335f59db
+        name: authorization
+        value: 628d41db39d5d53e4d03598f
+        description: ""
+        disabled: true
+    authentication: {}
+    metaSortKey: -1653507502769
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
   - _id: req_244682d736b94689b0bf1dcec8a39cef
     parentId: fld_0e599c638b24475c8b1139f769cd8ed6
-    modified: 1653509534145
+    modified: 1653677839534
     created: 1653430764912
-    url: "{{ _.baseURL }}/challenges/628e8d923a3d4012ccf1db38"
+    url: "{{ _.baseURL }}/challenges/62911c8a5a7d0e3013832c57"
     name: DELETE
     description: ""
     method: DELETE
@@ -220,9 +284,9 @@ resources:
     _type: request
   - _id: req_4ec8ae8c9aa24d90a5591f1d83b66596
     parentId: fld_0e599c638b24475c8b1139f769cd8ed6
-    modified: 1653429974156
+    modified: 1653676475592
     created: 1653429972203
-    url: "{{ _.baseURL }}/challenges/628d4527e6ef7a8a43bf7332"
+    url: "{{ _.baseURL }}/challenges/628e9549da2d44b4e00ace9d"
     name: FIND BY ID
     description: ""
     method: GET
@@ -231,37 +295,6 @@ resources:
     headers: []
     authentication: {}
     metaSortKey: -1653422087024.5
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_eb3c973e28864681b61829a6491f584a
-    parentId: fld_0e599c638b24475c8b1139f769cd8ed6
-    modified: 1653511496378
-    created: 1653417656298
-    url: "{{ _.baseURL }}/challenges"
-    name: CREATE
-    description: ""
-    method: POST
-    body:
-      mimeType: application/json
-      text: |-
-        {
-        	"dateTimeChallenge":  "2022-05-29T20:30:00.000Z",
-        	"requesterPlayerId": "628d41db39d5d53e4d03598f",
-        	"challengedPlayerId": "628d41eb39d5d53e4d035992"
-        }
-    parameters: []
-    headers:
-      - name: Content-Type
-        value: application/json
-        id: pair_784c07407282475fa7b18466fa81feb3
-    authentication: {}
-    metaSortKey: -1653417656298
     isPrivate: false
     settingStoreCookies: true
     settingSendCookies: true
