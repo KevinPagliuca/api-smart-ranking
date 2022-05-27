@@ -1,17 +1,36 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { IChallenge, IChallengeStatus } from './interfaces/challenge.interface';
+import {
+  IChallenge,
+  IChallengeStatus,
+  IGame,
+} from './interfaces/challenge.interface';
 import { Model, isValidObjectId } from 'mongoose';
 import { PlayersService } from 'src/players/players.service';
 import { CreateChallengeDTO } from './dtos/createChallenge.dto';
 import { CategoriesService } from 'src/categories/categories.service';
 import { UpdateChallengeDTO } from './dtos/updateChallenge.dto';
+import { CreateGameDTO } from './dtos/createGame.dto';
 
 @Injectable()
 export class ChallengesService {
+  challengePopulates = [
+    {
+      path: 'category',
+      select: ['_id', 'name', 'description', 'events', 'players'],
+    },
+    { path: 'players' },
+    { path: 'game', populate: { path: 'def' } },
+  ];
   constructor(
     @InjectModel('Challenge')
     private readonly challengeModel: Model<IChallenge>,
+    @InjectModel('Game')
+    private readonly gameModel: Model<IGame>,
     private readonly playersService: PlayersService,
     private readonly categoriesService: CategoriesService,
   ) {}
@@ -72,9 +91,48 @@ export class ChallengesService {
 
     const createdChallenge = await new this.challengeModel(
       newChallengeDTO,
-    ).populate('players');
+    ).populate(this.challengePopulates);
 
     return await createdChallenge.save();
+  }
+
+  async createGame(id: string, dto: CreateGameDTO) {
+    const challenge = await this.findById(id);
+
+    if (!challenge) {
+      throw new BadRequestException('Challenge not found');
+    }
+
+    const challengePlayersIds = challenge.players.map((player) => player._id);
+
+    if (challengePlayersIds.some((player) => player === dto.def._id)) {
+      throw new BadRequestException('Player is not part of this challenge');
+    }
+
+    const createdGame = await new this.gameModel({
+      ...dto,
+      category: challenge.category,
+      players: challenge.players,
+    }).save();
+
+    try {
+      return await this.challengeModel
+        .findOneAndUpdate(
+          { _id: challenge._id },
+          {
+            $set: {
+              status: IChallengeStatus.FINISHED,
+              game: createdGame._id,
+            },
+          },
+          { new: true },
+        )
+        .populate(this.challengePopulates)
+        .exec();
+    } catch (error) {
+      await this.gameModel.deleteOne({ _id: createdGame._id }).exec();
+      throw new InternalServerErrorException(error.message);
+    }
   }
 
   async update(id: string, dto: UpdateChallengeDTO, updatePlayerId: string) {
@@ -103,18 +161,22 @@ export class ChallengesService {
         },
         { new: true },
       )
-      .populate('players')
+      .populate(this.challengePopulates)
       .exec();
   }
 
   async findAll() {
-    return await this.challengeModel.find().populate('players');
+    return await this.challengeModel
+      .find()
+      .populate(this.challengePopulates)
+      .exec();
   }
 
   async findById(id: string) {
     return await this.challengeModel
       .findById(id)
-      .populate(['category', 'players']);
+      .populate(this.challengePopulates)
+      .exec();
   }
 
   async findAllByPlayerId(playerId: string) {
@@ -124,7 +186,8 @@ export class ChallengesService {
 
     return await this.challengeModel
       .find({ players: playerId })
-      .populate(['category', 'players']);
+      .populate(this.challengePopulates)
+      .exec();
   }
 
   async findAllByCategoryId(categoryId: string) {
@@ -134,13 +197,15 @@ export class ChallengesService {
 
     return await this.challengeModel
       .find({ category: categoryId })
-      .populate(['category', 'players']);
+      .populate(this.challengePopulates)
+      .exec();
   }
 
   async findAllByStatus(status: IChallengeStatus) {
     return await this.challengeModel
       .find({ status })
-      .populate(['category', 'players']);
+      .populate(this.challengePopulates)
+      .exec();
   }
 
   async delete(id: string) {
@@ -150,6 +215,15 @@ export class ChallengesService {
       throw new BadRequestException('Challenge not found');
     }
 
-    return this.challengeModel.deleteOne({ _id: challenge._id });
+    return this.challengeModel
+      .findOneAndUpdate(
+        { _id: challenge._id },
+        {
+          $set: {
+            status: IChallengeStatus.CANCELED,
+          },
+        },
+      )
+      .exec();
   }
 }

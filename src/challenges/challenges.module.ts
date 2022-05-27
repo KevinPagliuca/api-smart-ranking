@@ -5,6 +5,7 @@ import { PlayersModule } from 'src/players/players.module';
 import { IChallengeSchema } from './interfaces/challenge.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CategoriesModule } from 'src/categories/categories.module';
+import { IGameSchema } from './interfaces/game.schema';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { CategoriesModule } from 'src/categories/categories.module';
     CategoriesModule,
     MongooseModule.forFeature([
       { name: 'Challenge', schema: IChallengeSchema },
+      { name: 'Game', schema: IGameSchema },
     ]),
   ],
   providers: [ChallengesService],

@@ -15,7 +15,7 @@ export class IChallenge extends Document {
   dateTimeAnswer: Date;
 
   requester: IPlayer;
-  players: IPlayer[];
+  players: [IPlayer, IPlayer];
 
   status: IChallengeStatus;
   category: string;
@@ -24,9 +24,9 @@ export class IChallenge extends Document {
 
 export interface IGame extends Document {
   category: string;
-  players: IPlayer[];
+  players: [IPlayer, IPlayer];
   def: IPlayer;
-  result: IResult;
+  result: IResult[];
 }
 
 export interface IResult {

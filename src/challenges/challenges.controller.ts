@@ -14,6 +14,7 @@ import {
 import { ParamValidator } from 'src/shared/pipes/paramValidator.pipe';
 import { ChallengesService } from './challenges.service';
 import { CreateChallengeDTO } from './dtos/createChallenge.dto';
+import { CreateGameDTO } from './dtos/createGame.dto';
 import { UpdateChallengeDTO } from './dtos/updateChallenge.dto';
 import { IChallengeStatus } from './interfaces/challenge.interface';
 
@@ -51,6 +52,15 @@ export class ChallengesController {
     return await this.challengesService.findById(id);
   }
 
+  @Post('/:challengeId/create-game')
+  @UsePipes(ValidationPipe)
+  async createGame(
+    @Param('challengeId') id: string,
+    @Body() createGameDTO: CreateGameDTO,
+  ) {
+    return await this.challengesService.createGame(id, createGameDTO);
+  }
+
   @Get('/find/status')
   @UsePipes(ValidationPipe)
   async findAllStatus(
@@ -74,6 +84,6 @@ export class ChallengesController {
   @Delete('/:id')
   async delete(@Param('id') id: string) {
     await this.challengesService.delete(id);
-    return { message: 'Successfully deleted challenge' };
+    return { message: 'Challenge status changed to CANCELED.' };
   }
 }
