@@ -3,9 +3,9 @@ include .env
 .PHONY: up
 up:
   ifeq ($(NODE_ENV), development)
-	  docker-compose up
+	  make copy && docker-compose up
   else
-	  docker-compose up -d
+	  make copy && docker-compose up -d
   endif
 
 
@@ -25,3 +25,13 @@ logs:
   else
 	  docker-compose logs
   endif
+
+.PHONY: copy
+copy:
+  ifeq ($(NODE_ENV), development)
+	  cp -r constants.template ./gateway/src/shared/env/constants.ts
+	  cp -r constants.template ./admin-service/src/shared/env/constants.ts
+  else
+	  echo "Copying files to docker container"
+  endif
+

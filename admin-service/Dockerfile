@@ -4,7 +4,7 @@ WORKDIR /usr/app/admin-service
 
 COPY package*.json ./
 
-RUN npm install
+RUN yarn
 
 COPY . .
 

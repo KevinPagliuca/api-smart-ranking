@@ -4,7 +4,7 @@ WORKDIR /usr/app/gateway
 
 COPY package*.json ./
 
-RUN npm install
+RUN yarn
 
 COPY . .
 
