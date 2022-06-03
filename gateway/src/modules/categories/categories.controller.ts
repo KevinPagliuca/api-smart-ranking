@@ -12,19 +12,19 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { lastValueFrom } from 'rxjs';
+import { BASE_URL, CATEGORIES_EVENTS } from 'src/shared/env/constants';
 
-import { BASE_URL, CATEGORIES_EVENTS } from 'src/shared/constants';
 import { ClientProxyService } from '../client-proxy/client-proxy.service';
 import { CreateCategoryDTO } from './dtos/createCategory.dto';
 import { UpdateCategoryDTO } from './dtos/updateCategory.dto';
 
-@Controller(BASE_URL)
+@Controller(`${BASE_URL}/categories`)
 export class CategoriesController {
   constructor(private readonly clientProxyService: ClientProxyService) {}
   private clientAdminBackend =
     this.clientProxyService.getClientProxyAdminBackend();
 
-  @Post('/categories')
+  @Post('/')
   @UsePipes(ValidationPipe)
   async create(@Body() createCategoryDTO: CreateCategoryDTO) {
     const category = await lastValueFrom(
@@ -34,18 +34,16 @@ export class CategoriesController {
       ),
     );
 
-    console.log({ category });
-
     if (category) {
       throw new BadRequestException(
-        `This category "${createCategoryDTO.name}" already exists`,
+        `This category ${createCategoryDTO.name} already exists`,
       );
     } else {
       this.clientAdminBackend.emit(CATEGORIES_EVENTS.CREATE, createCategoryDTO);
     }
   }
 
-  @Get('/categories')
+  @Get('/')
   findAll(@Query('searchQuery') searchQuery = '') {
     return this.clientAdminBackend.send(
       CATEGORIES_EVENTS.FIND_ALL,
@@ -53,12 +51,12 @@ export class CategoriesController {
     );
   }
 
-  @Get('/categories/:query')
+  @Get('/:query')
   findOne(@Param('query') data: string) {
     return this.clientAdminBackend.send(CATEGORIES_EVENTS.FIND_ONE, data);
   }
 
-  @Put('/categories/:id')
+  @Put('/:id')
   @UsePipes(ValidationPipe)
   update(
     @Body() updateCategoryDTO: UpdateCategoryDTO,
@@ -70,7 +68,7 @@ export class CategoriesController {
     });
   }
 
-  @Delete('/categories/:id')
+  @Delete('/:id')
   delete(@Param('id') id: string) {
     this.clientAdminBackend.emit(CATEGORIES_EVENTS.DELETE, id);
   }

@@ -16,7 +16,8 @@ import {
   BASE_URL,
   CATEGORIES_EVENTS,
   PLAYERS_EVENTS,
-} from 'src/shared/constants';
+} from 'src/shared/env/constants';
+
 import { ClientProxyService } from '../client-proxy/client-proxy.service';
 import { CreatePlayerDTO } from './dtos/createPlayer.dto';
 import { UpdatePlayerDTO } from './dtos/updatePlayer.dto';

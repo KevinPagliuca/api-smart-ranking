@@ -5,9 +5,9 @@ services:
     container_name: 'rabbitmq'
     image: rabbitmq:3-management
     environment:
-      - RABBITMQ_ERLANG_COOKIE='secret'
-      - RABBITMQ_DEFAULT_USER=admin
-      - RABBITMQ_DEFAULT_PASS=admin
+      RABBITMQ_ERLANG_COOKIE: ${RABBITMQ_ERLANG_COOKIE}
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
     networks:
       - smartRanking
     ports:
@@ -25,7 +25,6 @@ services:
     environment:
       AMQP_URL: ${AMQP_URL}
       AMQP_QUEUE_ADMIN: ${AMQP_QUEUE_ADMIN}
-      AMQP_NOACK: ${AMQP_NOACK}
       
       NODE_ENV: ${NODE_ENV}
 
@@ -41,7 +40,7 @@ services:
       - ./gateway/.:/usr/app/gateway
       - /user/app/gateway/node_modules
   
-  admin-service: 
+  admin-service:
     container_name: 'admin-service'
     command: sh -c 'yarn && yarn start:dev'
     build:
@@ -52,7 +51,6 @@ services:
     environment:
       AMQP_URL: ${AMQP_URL}
       AMQP_QUEUE_ADMIN: ${AMQP_QUEUE_ADMIN}
-      AMQP_NOACK: ${AMQP_NOACK}
 
       NODE_ENV: ${NODE_ENV}
       MONGOOSE_URI: ${MONGOOSE_URI}

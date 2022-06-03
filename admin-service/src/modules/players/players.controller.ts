@@ -6,7 +6,7 @@ import {
   Payload,
   RmqContext,
 } from '@nestjs/microservices';
-import { ACKERRORS_CATEGORIES, PLAYERS_EVENTS } from 'src/shared/constants';
+import { ACKERRORS_CATEGORIES, PLAYERS_EVENTS } from 'src/shared/env/constants';
 import { IPlayer } from './interfaces/player.interface';
 import { UpdatePlayerPayload } from './interfaces/update-player.payload';
 import { PlayersService } from './players.service';

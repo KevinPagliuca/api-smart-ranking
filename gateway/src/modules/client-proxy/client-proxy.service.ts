@@ -4,7 +4,7 @@ import {
   ClientProxyFactory,
   Transport,
 } from '@nestjs/microservices';
-import { RMQ_CONFIG } from 'src/shared/constants';
+import { RMQ_CONFIG } from 'src/shared/env/constants';
 
 @Injectable()
 export class ClientProxyService {

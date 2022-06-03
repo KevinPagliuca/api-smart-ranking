@@ -18,8 +18,21 @@ const BASE_URL = '/api/v1';
 
 const RMQ_CONFIG = {
   urls: [process.env.AMQP_URL],
-  noAck: Boolean(process.env.AMQP_NOACK),
+  noAck: false,
   queue: process.env.AMQP_QUEUE_ADMIN,
 };
 
-export { CATEGORIES_EVENTS, PLAYERS_EVENTS, RMQ_CONFIG, BASE_URL };
+const ACKERRORS_CATEGORIES = [
+  'E11000',
+  'Category already exists',
+  'The category does not exist',
+  'Category not found',
+];
+
+export {
+  CATEGORIES_EVENTS,
+  PLAYERS_EVENTS,
+  RMQ_CONFIG,
+  BASE_URL,
+  ACKERRORS_CATEGORIES,
+};

@@ -6,8 +6,11 @@ import {
   Payload,
   RmqContext,
 } from '@nestjs/microservices';
-import { ACKERRORS_CATEGORIES, CATEGORIES_EVENTS } from 'src/shared/constants';
 import { ICategory } from 'src/modules/categories/interfaces/category.interface';
+import {
+  ACKERRORS_CATEGORIES,
+  CATEGORIES_EVENTS,
+} from 'src/shared/env/constants';
 import { CategoryService } from './categories.service';
 import { UpdateCategoryPayload } from './interfaces/update-category.payload';
 
