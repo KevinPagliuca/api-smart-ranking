@@ -14,6 +14,7 @@ export class ClientProxyService {
       options: {
         urls: RMQ_CONFIG.urls,
         queue: RMQ_CONFIG.queue,
+        noAck: RMQ_CONFIG.noAck,
       },
     });
   }

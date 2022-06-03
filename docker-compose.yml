@@ -1,13 +1,72 @@
-version: '3'
+version: '3.9'
 
 services:
-  rabbitmq3:
-    container_name: message-broker
+  rabbitmq:
+    container_name: 'rabbitmq'
     image: rabbitmq:3-management
     environment:
       - RABBITMQ_ERLANG_COOKIE='secret'
       - RABBITMQ_DEFAULT_USER=admin
       - RABBITMQ_DEFAULT_PASS=admin
+    networks:
+      - smartRanking
     ports:
       - '5672:5672'
       - '15672:15672'
+  
+  api-gateway:
+    container_name: 'api-gateway'
+    command: yarn start:dev
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    restart: always
+
+    environment:
+      AMQP_URL: ${AMQP_URL}
+      AMQP_QUEUE_ADMIN: ${AMQP_QUEUE_ADMIN}
+      AMQP_NOACK: ${AMQP_NOACK}
+      
+      NODE_ENV: ${NODE_ENV}
+
+    ports:
+      - '3333:3333'
+    links:
+      - rabbitmq
+    depends_on:
+      - rabbitmq
+    networks:
+      - smartRanking
+    volumes:
+      - ./gateway/.:/usr/app/gateway
+      - /user/app/gateway/node_modules
+  
+  admin-service: 
+    container_name: 'admin-service'
+    command: yarn start:dev
+    build:
+      context: ./admin-service
+      dockerfile: Dockerfile
+    restart: always
+
+    environment:
+      AMQP_URL: ${AMQP_URL}
+      AMQP_QUEUE_ADMIN: ${AMQP_QUEUE_ADMIN}
+      AMQP_NOACK: ${AMQP_NOACK}
+
+      NODE_ENV: ${NODE_ENV}
+      MONGOOSE_URI: ${MONGOOSE_URI}
+
+    links:
+      - rabbitmq
+    depends_on:
+      - rabbitmq
+    networks:
+      - smartRanking
+    volumes:
+      - ./admin-service/.:/usr/app/admin-service
+      - /user/app/admin-service/node_modules
+
+networks:
+  smartRanking:
+    driver: 'bridge'

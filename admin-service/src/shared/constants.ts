@@ -20,4 +20,12 @@ const ACKERRORS_CATEGORIES = [
   'E11000',
 ];
 
-export { CATEGORIES_EVENTS, PLAYERS_EVENTS, ACKERRORS_CATEGORIES };
+const RMQ_CONFIG = {
+  urls: process.env.AMQP_URL || [
+    'amqp://admin:admin@localhost:5672/smart-ranking',
+  ],
+  queue: process.env.AMQP_QUEUE_ADMIN || 'admin-backend',
+  noAck: process.env.NOACK || false,
+};
+
+export { CATEGORIES_EVENTS, PLAYERS_EVENTS, ACKERRORS_CATEGORIES, RMQ_CONFIG };

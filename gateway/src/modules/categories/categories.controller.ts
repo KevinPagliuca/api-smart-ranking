@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -10,6 +11,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { lastValueFrom } from 'rxjs';
 
 import { BASE_URL, CATEGORIES_EVENTS } from 'src/shared/constants';
 import { ClientProxyService } from '../client-proxy/client-proxy.service';
@@ -24,8 +26,23 @@ export class CategoriesController {
 
   @Post('/categories')
   @UsePipes(ValidationPipe)
-  create(@Body() createCategoryDTO: CreateCategoryDTO) {
-    this.clientAdminBackend.emit(CATEGORIES_EVENTS.CREATE, createCategoryDTO);
+  async create(@Body() createCategoryDTO: CreateCategoryDTO) {
+    const category = await lastValueFrom(
+      this.clientAdminBackend.send(
+        CATEGORIES_EVENTS.FIND_ONE,
+        createCategoryDTO.name,
+      ),
+    );
+
+    console.log({ category });
+
+    if (category) {
+      throw new BadRequestException(
+        `This category "${createCategoryDTO.name}" already exists`,
+      );
+    } else {
+      this.clientAdminBackend.emit(CATEGORIES_EVENTS.CREATE, createCategoryDTO);
+    }
   }
 
   @Get('/categories')

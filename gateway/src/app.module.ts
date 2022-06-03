@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { CategoriesModule } from '../categories/categories.module';
-import { PlayersModule } from '../players/players.module';
+import { CategoriesModule } from './modules/categories/categories.module';
+import { PlayersModule } from './modules/players/players.module';
 
 @Module({
   imports: [CategoriesModule, PlayersModule],
