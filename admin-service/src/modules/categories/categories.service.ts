@@ -3,6 +3,7 @@ import { RpcException } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
 import { isValidObjectId, Model } from 'mongoose';
 import { ICategory } from 'src/modules/categories/interfaces/category.interface';
+import { PlayersService } from '../players/players.service';
 
 interface VerifyCategoryExistsParams {
   id?: string;
@@ -11,9 +12,10 @@ interface VerifyCategoryExistsParams {
 }
 
 @Injectable()
-export class CategoryService {
+export class CategoriesService {
   constructor(
     @InjectModel('Category') private readonly categoryModel: Model<ICategory>,
+    private readonly playersService: PlayersService,
   ) {}
 
   async verifyCategoryExists(data: VerifyCategoryExistsParams) {
@@ -27,7 +29,7 @@ export class CategoryService {
         .exec();
     } else if (name) {
       findedCategory = await this.categoryModel
-        .findOne({ name: { $regex: new RegExp(name, 'i') } })
+        .findOne({ name: name.toUpperCase() })
         .populate('players')
         .exec();
     }
@@ -42,11 +44,17 @@ export class CategoryService {
   }
 
   async create(data: ICategory) {
-    const category = await this.verifyCategoryExists({ name: data.name });
+    const category = await this.categoryModel
+      .findOne({ name: data.name.toUpperCase() })
+      .populate('players')
+      .exec();
 
     if (category) throw new RpcException('Category already exists');
 
-    const createdCategory = await new this.categoryModel(data).save();
+    const createdCategory = await new this.categoryModel({
+      name: data.name.toUpperCase(),
+      ...data,
+    }).save();
     return createdCategory;
   }
 
@@ -62,6 +70,38 @@ export class CategoryService {
             name: category.name,
           },
         },
+        { new: true },
+      )
+      .populate('players')
+      .exec();
+  }
+
+  async assignPlayer(categoryId: string, playerId: string) {
+    const category = await this.verifyCategoryExists({
+      id: categoryId,
+      exception: true,
+    });
+    const player = await this.playersService.verifyPlayerExists({
+      id: playerId,
+      exception: true,
+    });
+
+    const findedPlayerExistsOnCategory = await this.categoryModel
+      .findById(categoryId)
+      .where('players')
+      .equals(playerId)
+      .exec();
+
+    if (findedPlayerExistsOnCategory) {
+      throw new RpcException('Player already assigned on this category');
+    }
+
+    category.players.push(player);
+
+    return await this.categoryModel
+      .findOneAndUpdate(
+        { _id: category._id },
+        { $set: category },
         { new: true },
       )
       .populate('players')
@@ -86,19 +126,27 @@ export class CategoryService {
 
   async findByName(name: string) {
     const category = await this.categoryModel
-      .findOne({ name: { $regex: new RegExp(name, 'i') } })
+      .findOne({ name: name.toUpperCase() })
       .populate('players')
       .exec();
     return category;
   }
 
   async findByIdOrName(data: string) {
-    let categories: ICategory[] | ICategory;
+    let category: ICategory;
     if (isValidObjectId(data)) {
-      categories = await this.findById(data);
+      category = await this.findById(data);
     } else {
-      categories = await this.findByName(data);
+      category = await this.findByName(data);
     }
+    return category;
+  }
+
+  async findByPlayerId(playerId: string) {
+    const categories = await this.categoryModel
+      .findOne({ players: playerId })
+      .populate('players')
+      .exec();
     return categories;
   }
 

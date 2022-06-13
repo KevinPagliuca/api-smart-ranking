@@ -6,7 +6,7 @@ import {
   Payload,
   RmqContext,
 } from '@nestjs/microservices';
-import { ACKERRORS_CATEGORIES, PLAYERS_EVENTS } from 'src/shared/env/constants';
+import { ACKERRORS_PLAYERS, PLAYERS_EVENTS } from 'src/shared/env/constants';
 import { IPlayer } from './interfaces/player.interface';
 import { UpdatePlayerPayload } from './interfaces/update-player.payload';
 import { PlayersService } from './players.service';
@@ -24,24 +24,20 @@ export class PlayersController {
       await channel.ack(originalMessage);
       return createdPlayer;
     } catch (error) {
-      ACKERRORS_CATEGORIES.forEach(async (item) => {
+      ACKERRORS_PLAYERS.forEach(async (item) => {
         if (error.message.includes(item)) {
-          await channel.ack(originalMessage, false, false);
+          await channel.ack(originalMessage);
         }
       });
     }
   }
 
   @MessagePattern(PLAYERS_EVENTS.FIND_ALL)
-  async findAll(@Payload() data: string, @Ctx() ctx: RmqContext) {
+  async findAll(@Payload() name: string, @Ctx() ctx: RmqContext) {
     const channel = ctx.getChannelRef();
     const originalMessage = ctx.getMessage();
     try {
-      if (data) {
-        return (await this.playersService.findByIdOrName(data)) || [];
-      } else {
-        return await this.playersService.findAll();
-      }
+      return await this.playersService.findAll(name);
     } finally {
       await channel.ack(originalMessage);
     }
@@ -52,7 +48,7 @@ export class PlayersController {
     const channel = ctx.getChannelRef();
     const originalMessage = ctx.getMessage();
     try {
-      return await this.playersService.findByIdOrName(data);
+      return await this.playersService.findByIdOrEmail(data);
     } finally {
       await channel.ack(originalMessage);
     }
@@ -73,9 +69,9 @@ export class PlayersController {
       await channel.ack(originalMessage);
       return categoryUpdated;
     } catch (error) {
-      ACKERRORS_CATEGORIES.forEach(async (item) => {
+      ACKERRORS_PLAYERS.forEach(async (item) => {
         if (error.message.includes(item)) {
-          await channel.ack(originalMessage, false, false);
+          await channel.ack(originalMessage);
         }
       });
     }
@@ -90,9 +86,9 @@ export class PlayersController {
       await channel.ack(originalMessage);
       return categoryDeleted;
     } catch (error) {
-      ACKERRORS_CATEGORIES.forEach(async (item) => {
+      ACKERRORS_PLAYERS.forEach(async (item) => {
         if (error.message.includes(item)) {
-          await channel.ack(originalMessage, false, false);
+          await channel.ack(originalMessage);
         }
       });
     }

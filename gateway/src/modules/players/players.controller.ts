@@ -12,32 +12,21 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { lastValueFrom } from 'rxjs';
-import {
-  BASE_URL,
-  CATEGORIES_EVENTS,
-  PLAYERS_EVENTS,
-} from 'src/shared/env/constants';
+import { BASE_URL, PLAYERS_EVENTS } from 'src/shared/env/constants';
 
 import { ClientProxyService } from '../client-proxy/client-proxy.service';
-import { CreatePlayerDTO } from './dtos/createPlayer.dto';
-import { UpdatePlayerDTO } from './dtos/updatePlayer.dto';
+import { CreatePlayerDTO } from './dtos/create-player.dto';
+import { UpdatePlayerDTO } from './dtos/update-player.dto';
 
-@Controller(BASE_URL)
+@Controller(`${BASE_URL}/players`)
 export class PlayersController {
   constructor(private readonly clientProxyService: ClientProxyService) {}
   private clientAdminBackend =
     this.clientProxyService.getClientProxyAdminBackend();
 
-  @Post('/players/')
+  @Post('/')
   @UsePipes(ValidationPipe)
   async create(@Body() createPlayerDTO: CreatePlayerDTO) {
-    const category = await lastValueFrom(
-      this.clientAdminBackend.send(
-        CATEGORIES_EVENTS.FIND_ONE,
-        createPlayerDTO.category,
-      ),
-    );
-
     const player = await lastValueFrom(
       this.clientAdminBackend.send(
         PLAYERS_EVENTS.FIND_ONE,
@@ -45,16 +34,14 @@ export class PlayersController {
       ),
     );
 
-    if (player) throw new BadRequestException('This email already taken');
-
-    if (category) {
-      this.clientAdminBackend.emit(PLAYERS_EVENTS.CREATE, createPlayerDTO);
+    if (player) {
+      throw new BadRequestException('This email already taken');
     } else {
-      throw new BadRequestException('The category does not exist');
+      this.clientAdminBackend.emit(PLAYERS_EVENTS.CREATE, createPlayerDTO);
     }
   }
 
-  @Put('/players/:id')
+  @Put('/:id')
   @UsePipes(ValidationPipe)
   async update(
     @Body() updatePlayerDTO: UpdatePlayerDTO,
@@ -74,13 +61,34 @@ export class PlayersController {
     }
   }
 
-  @Get('/players')
-  findAll(@Query('searchQuery') searchQuery = '') {
-    return this.clientAdminBackend.send(PLAYERS_EVENTS.FIND_ALL, searchQuery);
+  @Get('/')
+  findAll(@Query('name') name = '') {
+    return this.clientAdminBackend.send(PLAYERS_EVENTS.FIND_ALL, name);
   }
 
-  @Delete('/players/:id')
+  @Get('/:searchQuery')
+  async findOne(@Param('searchQuery') data: string) {
+    const player = await lastValueFrom(
+      this.clientAdminBackend.send(PLAYERS_EVENTS.FIND_ONE, data),
+    );
+
+    if (!player) {
+      throw new BadRequestException('Player not found');
+    }
+
+    return player;
+  }
+
+  @Delete('/:id')
   delete(@Param('id') id: string) {
-    this.clientAdminBackend.emit(PLAYERS_EVENTS.DELETE, id);
+    const player = lastValueFrom(
+      this.clientAdminBackend.send(PLAYERS_EVENTS.FIND_ONE, id),
+    );
+
+    if (player) {
+      this.clientAdminBackend.emit(PLAYERS_EVENTS.DELETE, id);
+    } else {
+      throw new BadRequestException('The player does not exist');
+    }
   }
 }

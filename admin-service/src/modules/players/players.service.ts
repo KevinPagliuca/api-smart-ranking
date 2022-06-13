@@ -5,7 +5,7 @@ import { isValidObjectId, Model } from 'mongoose';
 import { IPlayer } from './interfaces/player.interface';
 
 interface VerifyPlayerExistsParams {
-  name?: string;
+  email?: string;
   id?: string;
   exception?: boolean | string;
 }
@@ -17,20 +17,30 @@ export class PlayersService {
   ) {}
 
   async verifyPlayerExists(data: VerifyPlayerExistsParams) {
-    const { name, exception, id } = data;
+    const { email, exception, id } = data;
     let findedPlayer: IPlayer;
 
     if (id && isValidObjectId(id)) {
-      findedPlayer = await this.playerModel.findById(id).exec();
-    } else if (name) {
       findedPlayer = await this.playerModel
-        .findOne({ name: { $regex: new RegExp(name, 'i') } })
+        .findById(id)
+        .populate({
+          path: 'category',
+          select: ['id', 'name', 'description'],
+        })
+        .exec();
+    } else if (email) {
+      findedPlayer = await this.playerModel
+        .findOne({ email: { $regex: new RegExp(email, 'i') } })
+        .populate({
+          path: 'category',
+          select: ['id', 'name', 'description'],
+        })
         .exec();
     }
 
     if (!findedPlayer && !!exception) {
       throw new RpcException(
-        typeof exception === 'string' ? exception : 'Category not found',
+        typeof exception === 'string' ? exception : 'Player not found',
       );
     }
 
@@ -38,7 +48,7 @@ export class PlayersService {
   }
 
   async create(data: IPlayer) {
-    const player = await this.verifyPlayerExists({ name: data.name });
+    const player = await this.verifyPlayerExists({ email: data.email });
 
     if (player) throw new RpcException('Player already exists');
 
@@ -55,12 +65,17 @@ export class PlayersService {
         { $set: { ...data, email } },
         { new: true },
       )
+      .populate({
+        path: 'category',
+        select: ['id', 'name', 'description'],
+      })
       .exec();
   }
 
-  async findAll() {
+  async findAll(name: string) {
     const players = await this.playerModel
       .find()
+      .where('name', { $regex: new RegExp(name, 'i') })
       .populate({
         path: 'category',
         select: ['id', 'name', 'description'],
@@ -70,23 +85,33 @@ export class PlayersService {
   }
 
   async findById(id: string) {
-    const player = await this.playerModel.findById(id).exec();
-    return player;
-  }
-
-  async findByName(name: string) {
     const player = await this.playerModel
-      .findOne({ name: { $regex: new RegExp(name, 'i') } })
+      .findById(id)
+      .populate({
+        path: 'category',
+        select: ['id', 'name', 'description'],
+      })
       .exec();
     return player;
   }
 
-  async findByIdOrName(data: string) {
+  async findByEmail(email: string) {
+    const player = await this.playerModel
+      .findOne({ email: { $regex: new RegExp(email, 'i') } })
+      .populate({
+        path: 'category',
+        select: ['id', 'name', 'description'],
+      })
+      .exec();
+    return player;
+  }
+
+  async findByIdOrEmail(data: string) {
     let player: IPlayer;
     if (isValidObjectId(data)) {
       player = await this.findById(data);
     } else {
-      player = await this.findByName(data);
+      player = await this.findByEmail(data);
     }
     return player;
   }

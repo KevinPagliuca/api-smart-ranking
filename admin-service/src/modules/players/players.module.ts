@@ -10,5 +10,6 @@ import { IPlayerSchema } from './interfaces/player.schema';
   ],
   providers: [PlayersService],
   controllers: [PlayersController],
+  exports: [PlayersService],
 })
 export class PlayersModule {}

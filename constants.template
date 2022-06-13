@@ -4,6 +4,7 @@ const CATEGORIES_EVENTS = {
   DELETE: 'delete-category',
   FIND_ALL: 'find-all-categories',
   FIND_ONE: 'find-one-category',
+  FIND_BY_PLAYER: 'find-player-categories',
 };
 
 const PLAYERS_EVENTS = {
@@ -12,6 +13,10 @@ const PLAYERS_EVENTS = {
   DELETE: 'delete-player',
   FIND_ALL: 'find-all-players',
   FIND_ONE: 'find-one-players',
+};
+
+const ASSIGN_PLAYERS_EVENTS = {
+  CATEGORY_ASSIGN: 'category-assign-players',
 };
 
 const BASE_URL = '/api/v1';
@@ -29,10 +34,18 @@ const ACKERRORS_CATEGORIES = [
   'Category not found',
 ];
 
+const ACKERRORS_PLAYERS = [
+  'E11000',
+  'Player already exists',
+  'Player not found',
+];
+
 export {
   CATEGORIES_EVENTS,
   PLAYERS_EVENTS,
+  ASSIGN_PLAYERS_EVENTS,
   RMQ_CONFIG,
   BASE_URL,
   ACKERRORS_CATEGORIES,
+  ACKERRORS_PLAYERS,
 };

@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsMongoId } from 'class-validator';
+import { IsEmail, IsNotEmpty } from 'class-validator';
 
 export class CreatePlayerDTO {
   @IsNotEmpty()
@@ -10,8 +10,4 @@ export class CreatePlayerDTO {
 
   @IsNotEmpty()
   name: string;
-
-  @IsNotEmpty()
-  @IsMongoId()
-  category: string;
 }
