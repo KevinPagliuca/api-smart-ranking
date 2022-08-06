@@ -150,8 +150,12 @@ export class CategoriesService {
     return categories;
   }
 
-  async delete(id: string) {
-    await this.verifyCategoryExists({ id, exception: true });
-    return await this.categoryModel.deleteOne({ _id: id });
+  async delete(category: string) {
+    const { _id } = await this.verifyCategoryExists({
+      id: category,
+      name: category,
+      exception: true,
+    });
+    return await this.categoryModel.deleteOne({ _id });
   }
 }

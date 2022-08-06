@@ -7,7 +7,6 @@ import {
   Param,
   Post,
   Put,
-  Query,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -85,8 +84,8 @@ export class CategoriesController {
   }
 
   @Get('/')
-  findAll(@Query('name') name = '') {
-    return this.clientAdminBackend.send(CATEGORIES_EVENTS.FIND_ALL, name);
+  findAll() {
+    return this.clientAdminBackend.send(CATEGORIES_EVENTS.FIND_ALL, null);
   }
 
   @Get('/:query')
@@ -127,7 +126,7 @@ export class CategoriesController {
       this.clientAdminBackend.send(CATEGORIES_EVENTS.FIND_ONE, id),
     );
     if (!category) {
-      throw new BadRequestException(`This category does not exists`);
+      throw new BadRequestException(`The category doesn't exists`);
     } else {
       this.clientAdminBackend.emit(CATEGORIES_EVENTS.DELETE, id);
       return { message: 'Category successfully deleted' };

@@ -48,11 +48,9 @@ export class CategoriesController {
         payload.id,
         payload.data,
       );
-      console.log({ categoryUpdated });
       await channel.ack(originalMessage);
       return categoryUpdated;
     } catch (error) {
-      console.log(error.message);
       ACKERRORS_CATEGORIES.forEach(async (item) => {
         if (error.message.includes(item)) {
           await channel.ack(originalMessage, false, false);
@@ -112,11 +110,11 @@ export class CategoriesController {
   }
 
   @EventPattern(CATEGORIES_EVENTS.DELETE)
-  async delete(@Payload() id: string, @Ctx() ctx: RmqContext) {
+  async delete(@Payload() data: string, @Ctx() ctx: RmqContext) {
     const channel = ctx.getChannelRef();
     const originalMessage = ctx.getMessage();
     try {
-      const categoryDeleted = await this.categoriesService.delete(id);
+      const categoryDeleted = await this.categoriesService.delete(data);
       await channel.ack(originalMessage);
       return categoryDeleted;
     } catch (error) {
