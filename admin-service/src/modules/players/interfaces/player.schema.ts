@@ -9,6 +9,7 @@ export const IPlayerSchema = new mongoose.Schema(
     ranking: { type: String },
     category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
     photo_url: { type: String },
+    photo_id: { type: String },
   },
   {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },

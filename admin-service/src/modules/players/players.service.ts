@@ -62,7 +62,7 @@ export class PlayersService {
     return await this.playerModel
       .findOneAndUpdate(
         { _id: id },
-        { $set: { ...data, email } },
+        { $set: { ...data, email, _id: id } },
         { new: true },
       )
       .populate({

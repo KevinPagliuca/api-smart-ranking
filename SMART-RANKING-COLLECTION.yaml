@@ -1,0 +1,762 @@
+_type: export
+__export_format: 4
+__export_date: 2022-08-19T12:39:44.680Z
+__export_source: insomnia.desktop.app:v2022.5.0
+resources:
+  - _id: req_eb3c973e28864681b61829a6491f584a
+    parentId: fld_0e599c638b24475c8b1139f769cd8ed6
+    modified: 1660912667670
+    created: 1653417656298
+    url: "{{ _.baseURL }}/challenges"
+    name: CREATE CHALLENGE
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"dateTimeChallenge":  "2022-05-29T20:30:00.000Z",
+        	"requesterPlayerId": "628d41db39d5d53e4d03598f",
+        	"challengedPlayerId": "628d41eb39d5d53e4d035992"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_784c07407282475fa7b18466fa81feb3
+    authentication: {}
+    metaSortKey: -1653675430363
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_0e599c638b24475c8b1139f769cd8ed6
+    parentId: wrk_94ac7fdfb77640d59dd12e6d90c4abee
+    modified: 1653431045398
+    created: 1653417646240
+    name: CHALLENGES
+    description: ""
+    environment: {}
+    environmentPropertyOrder: {}
+    metaSortKey: -1653417646240
+    _type: request_group
+  - _id: wrk_94ac7fdfb77640d59dd12e6d90c4abee
+    parentId: null
+    modified: 1650593603096
+    created: 1650593603096
+    name: API-SMART-RANKING
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_dde9f1685b1444db86acd038071e7408
+    parentId: fld_0e599c638b24475c8b1139f769cd8ed6
+    modified: 1660912677283
+    created: 1653675430313
+    url: "{{ _.baseURL }}/challenges/62911c8a5a7d0e3013832c57/create-game"
+    name: CREATE GAME
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"def": "628d41db39d5d53e4d03598f",
+        	"result": [
+        		{ "set": "6-1" }, { "set": "6-4" }
+        	]
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_1871ac161f1d472189153246725575ef
+    authentication: {}
+    metaSortKey: -1653675430313
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_5f8d618cd8f94d7cad7b71a04edf92df
+    parentId: fld_0e599c638b24475c8b1139f769cd8ed6
+    modified: 1660912671705
+    created: 1653507502769
+    url: "{{ _.baseURL }}/challenges/62911c8a5a7d0e3013832c57"
+    name: UPDATE
+    description: >
+      <span style="color:#00FFFF;font-size:16px;font-weight:700">
+      	The requesting player can change the game time while the status is pending.
+      </span>
+
+
+      POSSIBLES REQ:
+
+
+      ```json
+
+      {
+      	"dateTimeChallenge": "2022-05-28T20:30:00.000Z",	
+      }
+
+      ```
+
+
+      <span style="color:#00FFFF;font-size:16px;font-weight:700">
+      	The challenged player can change the game time too and status
+      </span>
+
+
+      POSSIBLES REQ:
+
+
+      ```json
+
+      {
+      	"dateTimeChallenge": "2022-05-28T20:30:00.000Z",	
+      	"STATUS": "ACCEPTED",
+      }
+
+      ```
+
+      <span style="color:#00FFFF;font-size:16px;font-weight:700">
+      	Status Options <br />
+      </span>
+
+      	CANCELED
+      	PENDING
+      	ACCEPTED
+      	FINISHED
+      	REJECTED
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"dateTimeChallenge": "2022-05-28T20:30:00.000Z",
+        	"status": "PENDING"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_ff9c1dc8d04f4daea02b615eefa6fbf0
+      - id: pair_182150c5f5e44233af722772335f59db
+        name: authorization
+        value: 628d41db39d5d53e4d03598f
+        description: ""
+        disabled: true
+    authentication: {}
+    metaSortKey: -1653507502769
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_244682d736b94689b0bf1dcec8a39cef
+    parentId: fld_0e599c638b24475c8b1139f769cd8ed6
+    modified: 1653677839534
+    created: 1653430764912
+    url: "{{ _.baseURL }}/challenges/62911c8a5a7d0e3013832c57"
+    name: DELETE
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1653430764912
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_e1071062724c41cc99f448b0c06c9676
+    parentId: fld_0e599c638b24475c8b1139f769cd8ed6
+    modified: 1653429846642
+    created: 1653426532555
+    url: "{{ _.baseURL }}/challenges/find/status"
+    name: FIND ALL BY STATUS
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_9304025218fe4678a9b452f118b9b6a4
+        name: status
+        value: PENDING
+        description: ""
+        disabled: false
+    headers: []
+    authentication: {}
+    metaSortKey: -1653426532555
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_1bd07dd0c8bc4bb780e28a3a6dd45ba3
+    parentId: fld_0e599c638b24475c8b1139f769cd8ed6
+    modified: 1653429872339
+    created: 1653429819111
+    url: "{{ _.baseURL }}/challenges/find/category"
+    name: FIND ALL BY CATEGORY
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_9304025218fe4678a9b452f118b9b6a4
+        name: id
+        value: 628d430477da3b48e4532b68
+        description: ""
+        disabled: false
+    headers: []
+    authentication: {}
+    metaSortKey: -1653426525153
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_2d387132017540f586a2a5ebaa7b7da2
+    parentId: fld_0e599c638b24475c8b1139f769cd8ed6
+    modified: 1653429855246
+    created: 1653429823744
+    url: "{{ _.baseURL }}/challenges/find/player"
+    name: FIND ALL BY PLAYER
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_9304025218fe4678a9b452f118b9b6a4
+        name: id
+        value: 628d41eb39d5d53e4d035992
+        description: ""
+        disabled: false
+    headers: []
+    authentication: {}
+    metaSortKey: -1653426521452
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_04782ab3d4f2434da0be7d45a4f0dafe
+    parentId: fld_0e599c638b24475c8b1139f769cd8ed6
+    modified: 1653426521294
+    created: 1653426517751
+    url: "{{ _.baseURL }}/challenges"
+    name: FIND ALL
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1653426517751
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_4ec8ae8c9aa24d90a5591f1d83b66596
+    parentId: fld_0e599c638b24475c8b1139f769cd8ed6
+    modified: 1653676475592
+    created: 1653429972203
+    url: "{{ _.baseURL }}/challenges/628e9549da2d44b4e00ace9d"
+    name: FIND BY ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1653422087024.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_81dc221ddba24018914411d9fa0b9ede
+    parentId: fld_9df06579f6be4f6499031cf4117e9ba3
+    modified: 1660665797576
+    created: 1659793941742
+    url: "{{ _.baseURL }}/players/62ee6d6292187421c2a433ab/upload"
+    name: UPLOAD FILE
+    description: ""
+    method: POST
+    body:
+      mimeType: multipart/form-data
+      params:
+        - id: pair_86b3c8b4fb3545a09ef5c901e4b7bf8a
+          name: file
+          value: ""
+          description: ""
+          type: file
+          fileName: C:\Users\Kevin Pagliuca\Downloads\teste2.jpg
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: multipart/form-data
+        id: pair_2f484a6d86da4ac3abe8feedd9ffed12
+    authentication: {}
+    metaSortKey: -1659793941742
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_9df06579f6be4f6499031cf4117e9ba3
+    parentId: wrk_94ac7fdfb77640d59dd12e6d90c4abee
+    modified: 1650593646234
+    created: 1650593646234
+    name: PLAYERS
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1650593646234
+    _type: request_group
+  - _id: req_bf34356f38eb477abbaba0b0870b8ba8
+    parentId: fld_9df06579f6be4f6499031cf4117e9ba3
+    modified: 1660662934782
+    created: 1660662927845
+    url: "{{ _.baseURL }}/players/62ee6d6292187421c2a433ab/upload"
+    name: DELETE FILE
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1658264313897.25
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_13634989aa614d86941dd7e69de6dabb
+    parentId: fld_9df06579f6be4f6499031cf4117e9ba3
+    modified: 1660662949563
+    created: 1660662947186
+    url: "{{ _.baseURL }}/players/62ee6d6292187421c2a433ab/upload"
+    name: GET FILE
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1657499499974.875
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_da20569e0c324f0595ad0ec9f90fffe5
+    parentId: fld_9df06579f6be4f6499031cf4117e9ba3
+    modified: 1660912711620
+    created: 1650593753241
+    url: "{{ _.baseURL }}/players"
+    name: CREATE
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"phone_number": "11 95175-6854",
+        	"email": "kevin@pagliuca.com",
+        	"name": "Kevin Pagliuca"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_1b9dcc06b6ef47eda20d703582656b69
+    authentication: {}
+    metaSortKey: -1650593753241
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_d577a773f8604aca8b29199e9371f258
+    parentId: fld_9df06579f6be4f6499031cf4117e9ba3
+    modified: 1660912717791
+    created: 1650597154638
+    url: "{{ _.baseURL }}/players/62ee6d6292187421c2a433ab"
+    name: UPDATE
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"phone_number": "11 95175-6854",
+        	"name": "Kevin Pagliuca",
+        	"category": "629e2a7c34f03a751512a3e6"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_1b9dcc06b6ef47eda20d703582656b69
+    authentication: {}
+    metaSortKey: -1650593728914.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_f6cf4a2c0e104bf9b3c4cc05977ef591
+    parentId: fld_9df06579f6be4f6499031cf4117e9ba3
+    modified: 1660912726352
+    created: 1650593655935
+    url: "{{ _.baseURL }}/players"
+    name: FIND ALL / BY NAME
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_0e16cb8fa45c4190b7e2fd236cf7fad2
+        name: name
+        value: Kevin
+        description: ""
+        disabled: true
+    headers: []
+    authentication: {}
+    metaSortKey: -1650593716751.25
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_fcc80fff17e94257a4cda8d93e508861
+    parentId: fld_9df06579f6be4f6499031cf4117e9ba3
+    modified: 1659792748350
+    created: 1654190540072
+    url: "{{ _.baseURL }}/players/62ee6d6292187421c2a433ab"
+    name: FIND ONE
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1650495439953.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_531eb400c9af4b519ecc80a462a465b3
+    parentId: fld_9df06579f6be4f6499031cf4117e9ba3
+    modified: 1659792729751
+    created: 1650595080889
+    url: "{{ _.baseURL }}/players/62ee655692187421c2a43372"
+    name: DELETE
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1650397163155.75
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_e2ef8823f7a94e57b3a60c0039c91ca5
+    parentId: fld_c86878591e1641989f48ff1a964bd88c
+    modified: 1660912731404
+    created: 1654518407797
+    url: "{{ _.baseURL }}/categories/assign-player"
+    name: ASSIGN PLAYER ON CATEGORY
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"playerId": "",
+        	"categoryId": ""
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_405df0da8f61488892ba31090e086f4c
+    authentication: {}
+    metaSortKey: -1645108145429
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_c86878591e1641989f48ff1a964bd88c
+    parentId: wrk_94ac7fdfb77640d59dd12e6d90c4abee
+    modified: 1654518886119
+    created: 1654518877468
+    name: PLAYER/CATEGORY
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1647850895856.5
+    _type: request_group
+  - _id: req_e2e61978181a4cfeb2ed263942a3b601
+    parentId: fld_1d990c0a2b5d459c9e40f0471d033e3d
+    modified: 1660912734473
+    created: 1652965376843
+    url: "{{ _.baseURL }}/categories"
+    name: CREATE
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "B6",
+        	"description": "Top 1",
+        	"events": [
+        		{
+        			"name": "WIN",
+        			"operator": "+",
+        			"value": 20
+        		},
+        		{
+        			"name": "WIN_LEADER",
+        			"operator": "+",
+        			"value": 35
+        		},
+        		{
+        			"name": "DEFEAT",
+        			"operator": "-",
+        			"value": 30
+        		}
+        	]	
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_1b9dcc06b6ef47eda20d703582656b69
+    authentication: {}
+    metaSortKey: -1650593753241
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_1d990c0a2b5d459c9e40f0471d033e3d
+    parentId: wrk_94ac7fdfb77640d59dd12e6d90c4abee
+    modified: 1652965376832
+    created: 1652965376832
+    name: CATEGORIES
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1645108145479
+    _type: request_group
+  - _id: req_94da8c526cf44e768346635d333164a9
+    parentId: fld_1d990c0a2b5d459c9e40f0471d033e3d
+    modified: 1660912733565
+    created: 1652965376851
+    url: "{{ _.baseURL }}/categories/629e2be11fecc3e5eb7736d8"
+    name: UPDATE
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"description": "TOP 3",
+        	"events": [
+        		{
+        			"name": "WIN",
+        			"operator": "+",
+        			"value": 30
+        		},
+        		{
+        			"name": "WIN_LEADER",
+        			"operator": "+",
+        			"value": 50
+        		},
+        		{
+        			"name": "DEFEAT",
+        			"operator": "-",
+        			"value": 20
+        		}
+        	]
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_1b9dcc06b6ef47eda20d703582656b69
+    authentication: {}
+    metaSortKey: -1650593728914.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_dd7eec0ced624adda6621d184fbc56ff
+    parentId: fld_1d990c0a2b5d459c9e40f0471d033e3d
+    modified: 1659791273881
+    created: 1652965376836
+    url: "{{ _.baseURL }}/categories"
+    name: FIND ALL
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1650593716751.25
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_ed241e7640364798b7814eae668f29a4
+    parentId: fld_1d990c0a2b5d459c9e40f0471d033e3d
+    modified: 1660912743290
+    created: 1654515996902
+    url: "{{ _.baseURL }}/categories/629e292bd32427001da2dbd9"
+    name: FIND ONE
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1650544578352.375
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_812d1ce6d1dd4120acd94b04c3aaf940
+    parentId: fld_1d990c0a2b5d459c9e40f0471d033e3d
+    modified: 1659790369459
+    created: 1652965376846
+    url: "{{ _.baseURL }}/categories/B6"
+    name: DELETE
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1650397163155.75
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_36f3377418d514fb34a41582c3206fcf47e780e1
+    parentId: wrk_94ac7fdfb77640d59dd12e6d90c4abee
+    modified: 1660912750057
+    created: 1650593603100
+    name: Base Environment
+    data:
+      baseURL: http://localhost:3333/api/v1
+    dataPropertyOrder:
+      "&":
+        - baseURL
+    color: null
+    isPrivate: false
+    metaSortKey: 1650593603100
+    _type: environment
+  - _id: jar_36f3377418d514fb34a41582c3206fcf47e780e1
+    parentId: wrk_94ac7fdfb77640d59dd12e6d90c4abee
+    modified: 1650593603102
+    created: 1650593603102
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
+  - _id: spc_db0cbc5c86e24eef91db241a50631a9d
+    parentId: wrk_94ac7fdfb77640d59dd12e6d90c4abee
+    modified: 1650593603097
+    created: 1650593603097
+    fileName: API-SMART-RANKING
+    contents: ""
+    contentType: yaml
+    _type: api_spec
+  - _id: spc_8ae352c103fe4b848403e3006349c04f
+    parentId: wrk_94ac7fdfb77640d59dd12e6d90c4abee
+    modified: 1654518358294
+    created: 1654518358294
+    fileName: API-SMART-RANKING
+    contents: ""
+    contentType: yaml
+    _type: api_spec

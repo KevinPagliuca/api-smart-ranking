@@ -85,7 +85,7 @@ export class CategoriesController {
 
   @Get('/')
   findAll() {
-    return this.clientAdminBackend.send(CATEGORIES_EVENTS.FIND_ALL, null);
+    return this.clientAdminBackend.send(CATEGORIES_EVENTS.FIND_ALL, '');
   }
 
   @Get('/:query')

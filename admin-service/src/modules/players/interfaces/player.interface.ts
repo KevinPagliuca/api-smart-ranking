@@ -8,4 +8,5 @@ export interface IPlayer extends Document {
   ranking: string;
   ranking_position: number;
   photo_url: string;
+  photo_id: string;
 }
