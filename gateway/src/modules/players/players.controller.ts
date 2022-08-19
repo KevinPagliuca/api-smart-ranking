@@ -20,7 +20,6 @@ import {
   CATEGORIES_EVENTS,
   PLAYERS_EVENTS,
 } from 'src/shared/env/constants';
-import { IMulterFile } from 'src/shared/types/multer.interfaces';
 
 import { ClientProxyService } from '../client-proxy/client-proxy.service';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
@@ -107,7 +106,7 @@ export class PlayersController {
   @Post('/:id/upload')
   @UseInterceptors(FileInterceptor('file'))
   async uploadImage(
-    @UploadedFile() file: IMulterFile,
+    @UploadedFile() file: Express.Multer.File,
     @Param('id') id: string,
   ) {
     const player = await lastValueFrom(

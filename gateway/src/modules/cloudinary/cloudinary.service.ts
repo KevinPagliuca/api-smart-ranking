@@ -1,14 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { UploadApiErrorResponse, UploadApiResponse, v2 } from 'cloudinary';
 import toStream = require('buffer-to-stream');
-import { IMulterFile } from 'src/shared/types/multer.interfaces';
 
 interface IUploadImageResponse extends UploadApiResponse {
   playerId: string;
 }
 
 interface IUploadImageRequest {
-  file: IMulterFile;
+  file: Express.Multer.File;
   playerId: string;
   photo_id?: string;
 }
